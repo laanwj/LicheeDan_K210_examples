@@ -207,7 +207,6 @@ int main(void)
             /* ai cal finish*/
             while (g_dvp_finish_flag == 0)
                 ;
-            printf("1");
             g_dvp_finish_flag = 0;
             /* display pic*/
             g_ram_mux ^= 0x01;
