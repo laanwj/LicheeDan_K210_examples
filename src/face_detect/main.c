@@ -203,12 +203,11 @@ static void drawboxes(uint32_t x1, uint32_t y1, uint32_t x2, uint32_t y2, uint32
         y1 = 239;
     if (y2 >= 240)
         y2 = 239;
-    printf("%s:%d\r\n", __func__, __LINE__);
+
 #if (CLASS_NUMBER > 1)
     lcd_draw_rectangle(x1, y1, x2, y2, 2, class_lable[class].color);
     lcd_draw_picture(x1 + 1, y1 + 1, class_lable[class].width, class_lable[class].height, class_lable[class].ptr);
 #else
-    printf("%s:%d\r\n", __func__, __LINE__);
     lcd_draw_rectangle(x1, y1, x2, y2, 2, RED);
 #endif
 }
