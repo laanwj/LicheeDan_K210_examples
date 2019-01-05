@@ -18,6 +18,7 @@ below is tested
 ##### dvp_ov -- dvp output to lcd
 ##### gpiohs_led -- press key boot change led blue
 ##### ai_dmeo_sim -- k210 ai dmeo sim
+##### lvgl -- lvgl demo on maix go
 
 Kendryte K210 standalone SDK
 ======
