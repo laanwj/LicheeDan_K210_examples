@@ -19,6 +19,8 @@ below is tested
 ##### gpiohs_led -- press key boot change led blue
 ##### ai_dmeo_sim -- k210 ai dmeo sim
 ##### lvgl -- lvgl demo on maix go
+##### mic_play -- mic recode, speak paly
+##### wav_test -- test wav decode, speak paly
 
 Kendryte K210 standalone SDK
 ======
