@@ -21,6 +21,7 @@ below is tested
 ##### lvgl -- lvgl demo on maix go
 ##### mic_play -- mic recode, speak paly
 ##### wav_test -- test wav decode, speak paly
+##### kpu_conv -- kpu demo
 
 Kendryte K210 standalone SDK
 ======
