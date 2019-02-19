@@ -21,6 +21,7 @@ add_compile_flags(BOTH
         -fno-zero-initialized-in-bss
         -Os
         -ggdb
+        -ffloat-store
         )
 
 add_compile_flags(C -std=gnu11 -Wno-pointer-to-int-cast)
