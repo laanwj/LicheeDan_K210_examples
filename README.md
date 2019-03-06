@@ -22,6 +22,7 @@ below is tested
 ##### mic_play -- mic recode, speak paly
 ##### wav_test -- test wav decode, speak paly
 ##### kpu_conv -- kpu demo
+##### dace_detect_kmodel_flash -- load kmodel from flash
 
 Kendryte K210 standalone SDK
 ======
