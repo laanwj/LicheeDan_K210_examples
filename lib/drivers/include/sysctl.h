@@ -270,6 +270,9 @@ typedef enum _sysctl_reset_t
     SYSCTL_RESET_MAX = 31
 } sysctl_reset_t;
 
+/**
+ * @brief      System controller power bank id
+ */
 typedef enum _sysctl_power_bank
 {
     SYSCTL_POWER_BANK0,
@@ -291,6 +294,18 @@ typedef enum _sysctl_io_power_mode
     SYSCTL_POWER_V33,
     SYSCTL_POWER_V18
 } sysctl_io_power_mode_t;
+
+/**
+ * @brief      System reset status
+ */
+typedef enum _sysctl_reset_enum_status
+{
+    SYSCTL_RESET_STATUS_HARD,
+    SYSCTL_RESET_STATUS_SOFT,
+    SYSCTL_RESET_STATUS_WDT0,
+    SYSCTL_RESET_STATUS_WDT1,
+    SYSCTL_RESET_STATUS_MAX,
+} sysctl_reset_enum_status_t;
 
 /**
  * @brief       Git short commit id
@@ -1010,6 +1025,13 @@ uint32_t sysctl_set_spi0_dvp_data(uint8_t en);
 void sysctl_set_power_mode(sysctl_power_bank_t power_bank, sysctl_io_power_mode_t io_power_mode);
 
 /**
+ * @brief       get the frequency of CPU
+ * 
+ * @return      The frequency of CPU
+ */
+uint32_t sysctl_cpu_get_freq(void);
+
+/**
  * @brief       Set frequency of CPU
  * @param[in]   freq       The desired frequency in Hz
  *
@@ -1041,6 +1063,13 @@ void sysctl_disable_irq(void);
  * @return      The time of microsecond
  */
 uint64_t sysctl_get_time_us(void);
+
+/**
+ * @brief       Get reset status
+ *
+ * @return      The status of reset
+ */
+sysctl_reset_enum_status_t sysctl_get_reset_status(void);
 
 #ifdef __cplusplus
 }

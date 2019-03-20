@@ -65,8 +65,6 @@ automatically be set to 0 when the first task is started. */
 static UBaseType_t uxCriticalNesting[portNUM_PROCESSORS] = {[0 ... portNUM_PROCESSORS - 1] = 0xaaaaaaaa};
 PRIVILEGED_DATA static corelock_t xCoreLock = CORELOCK_INIT;
 
-UBaseType_t uxCPUClockRate = 390000000;
-
 /* Contains context when starting scheduler, save all 31 registers */
 #ifdef __gracefulExit
 #error Not ported
@@ -100,8 +98,8 @@ void vPortSetupTimer(void)
 {
     UBaseType_t uxPsrId = uxPortGetProcessorId();
     clint->mtimecmp[uxPsrId] = clint->mtime + (configTICK_CLOCK_HZ / configTICK_RATE_HZ);
-    /* Enable timer interupt */
-    __asm volatile("csrs mie,%0" ::"r"(0x80));
+    /* Enable timer and soft interupt */
+    __asm volatile("csrs mie,%0" ::"r"(0x88));
 }
 
 /*-----------------------------------------------------------*/
@@ -120,7 +118,7 @@ void prvTaskExitError(void)
     /* A function that implements a task must not exit or attempt to return to
     its caller as there is nothing to return to.  If a task wants to exit it
     should instead call vTaskDelete( NULL ).
-    
+
     Artificially force an assert() to be triggered if configASSERT() is
     defined, then stop here so application writers can catch the error. */
     UBaseType_t uxPsrId = uxPortGetProcessorId();
@@ -206,5 +204,5 @@ void vPortFatal(const char* file, int line, const char* message)
 
 UBaseType_t uxPortGetCPUClock()
 {
-    return uxCPUClockRate;
+    return (UBaseType_t)sysctl_cpu_get_freq();
 }
