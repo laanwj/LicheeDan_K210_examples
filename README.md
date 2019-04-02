@@ -23,6 +23,7 @@ below is tested
 ##### wav_test -- test wav decode, speak paly
 ##### kpu_conv -- kpu demo
 ##### dace_detect_kmodel_flash -- load kmodel from flash
+##### jpeg_decode -- decoe jpeg from buf to rgb565
 
 Kendryte K210 standalone SDK
 ======
