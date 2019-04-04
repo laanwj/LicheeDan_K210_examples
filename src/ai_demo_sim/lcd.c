@@ -35,7 +35,7 @@ void lcd_init(void)
     lcd_set_direction(DIR_YX_RLDU);
 
     /*display on*/
-    tft_write_command(DISPALY_ON);
+    tft_write_command(DISPLAY_ON);
     lcd_polling_enable();
 }
 

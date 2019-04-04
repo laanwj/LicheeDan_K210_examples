@@ -1,29 +1,28 @@
 LicheeDan_K210_examples
 ======
-use Kendryte K210 standalone SDK commitid d13b38098a3598b0018c38590387e43953efd140  
-and should use gcc-8.2, you can download at https://kendryte.com/downloads/]
+Use the Kendryte K210 standalone SDK commitid d13b38098a3598b0018c38590387e43953efd140  
+and should use gcc-8.2. This can be download at https://kendryte.com/downloads/]
 
-kendryte offical standalone sdk demo
+Kendryte official standalone sdk demo
 ======
-you can find it by https://github.com/kendryte/kendryte-standalone-demo.git  
-but i did not test it on sipeed board. so you must test it by yourself. 
+You can find the official standalone sdk demo at https://github.com/kendryte/kendryte-standalone-demo.git  
+It has not been tested on Sipeed board. so you must test it by yourself. 
 
-demo instruction
+Demo instruction
 ======
 
-below is tested
+The following demos have been tested:
 
 ##### hello_world -- uart output hello_world
 ##### lcd -- lcd display
 ##### dvp_ov -- dvp output to lcd
 ##### gpiohs_led -- press key boot change led blue
-##### ai_dmeo_sim -- k210 ai dmeo sim
+##### ai_dmeo_sim -- k210 ai demo sim
 ##### lvgl -- lvgl demo on maix go
-##### mic_play -- mic recode, speak paly
-##### wav_test -- test wav decode, speak paly
+##### mic_play -- mic record, speak play
+##### wav_test -- test wav decode, speak play
 ##### kpu_conv -- kpu demo
 ##### dace_detect_kmodel_flash -- load kmodel from flash
-##### jpeg_decode -- decoe jpeg from buf to rgb565
 
 Kendryte K210 standalone SDK
 ======
