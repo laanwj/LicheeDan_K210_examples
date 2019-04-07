@@ -5190,6 +5190,26 @@ static const fpioa_assign_t function_config[FUNC_MAX] =
     },
 };
 
+static inline fpioa_io_config_t to_config(uint32_t in)
+{
+    union {
+        uint32_t a;
+        fpioa_io_config_t b;
+    } x;
+    x.a = in;
+    return x.b;
+}
+
+static inline uint32_t from_config(fpioa_io_config_t in)
+{
+    union {
+        uint32_t a;
+        fpioa_io_config_t b;
+    } x;
+    x.b = in;
+    return x.a;
+}
+
 int fpioa_init(void)
 {
     int i = 0;
@@ -5224,7 +5244,7 @@ int fpioa_get_io(int number, fpioa_io_config_t *cfg)
     if (number < 0 || number >= FPIOA_NUM_IO || cfg == NULL)
         return -1;
     /* Atomic read register */
-    *cfg = fpioa->io[number];
+    *cfg = to_config(fpioa->io[number]);
     return 0;
 }
 
@@ -5234,7 +5254,7 @@ int fpioa_set_io(int number, fpioa_io_config_t *cfg)
     if (number < 0 || number >= FPIOA_NUM_IO || cfg == NULL)
         return -1;
     /* Atomic write register */
-    fpioa->io[number] = *cfg;
+    fpioa->io[number] = from_config(*cfg);
     return 0;
 }
 
@@ -5245,7 +5265,7 @@ int fpioa_set_io_pull(int number, fpioa_pull_t pull)
         return -1;
 
     /* Atomic read register */
-    fpioa_io_config_t cfg = fpioa->io[number];
+    fpioa_io_config_t cfg = to_config(fpioa->io[number]);
 
     switch (pull)
     {
@@ -5265,7 +5285,7 @@ int fpioa_set_io_pull(int number, fpioa_pull_t pull)
             break;
     }
     /* Atomic write register */
-    fpioa->io[number] = cfg;
+    fpioa->io[number] = from_config(cfg);
     return 0;
 }
 
@@ -5277,7 +5297,7 @@ int fpioa_get_io_pull(int number)
 
     fpioa_pull_t pull;
     /* Atomic read register */
-    fpioa_io_config_t cfg = fpioa->io[number];
+    fpioa_io_config_t cfg = to_config(fpioa->io[number]);
 
     if (cfg.pu == 0 && cfg.pd == 1)
         pull = FPIOA_PULL_DOWN;
@@ -5295,11 +5315,11 @@ int fpioa_set_io_driving(int number, fpioa_driving_t driving)
         return -1;
 
     /* Atomic read register */
-    fpioa_io_config_t cfg = fpioa->io[number];
+    fpioa_io_config_t cfg = to_config(fpioa->io[number]);
     /* Set IO driving */
     cfg.ds = driving;
     /* Atomic write register */
-    fpioa->io[number] = cfg;
+    fpioa->io[number] = from_config(cfg);
     return 0;
 }
 
@@ -5310,11 +5330,11 @@ int fpioa_set_sl(int number, uint8_t sl_value)
         return -1;
 
     /* Atomic read register */
-    fpioa_io_config_t cfg = fpioa->io[number];
+    fpioa_io_config_t cfg = to_config(fpioa->io[number]);
     /* Set IO driving */
     cfg.sl = sl_value;
     /* Atomic write register */
-    fpioa->io[number] = cfg;
+    fpioa->io[number] = from_config(cfg);
     return 0;
 }
 
@@ -5326,11 +5346,11 @@ int fpioa_set_st(int number, uint8_t st_value)
         return -1;
 
     /* Atomic read register */
-    fpioa_io_config_t cfg = fpioa->io[number];
+    fpioa_io_config_t cfg = to_config(fpioa->io[number]);
     /* Set IO driving */
     cfg.sl = st_value;
     /* Atomic write register */
-    fpioa->io[number] = cfg;
+    fpioa->io[number] = from_config(cfg);
     return 0;
 }
 
@@ -5341,7 +5361,7 @@ int fpioa_get_io_driving(int number)
     if (number < 0 || number >= FPIOA_NUM_IO)
         return -1;
 
-    return fpioa->io[number].ds;
+    return to_config(fpioa->io[number]).ds;
 }
 
 int fpioa_set_function_raw(int number, fpioa_function_t function)
@@ -5350,7 +5370,7 @@ int fpioa_set_function_raw(int number, fpioa_function_t function)
     if (number < 0 || number >= FPIOA_NUM_IO || function < 0 || function >= FUNC_MAX)
         return -1;
     /* Atomic write register */
-    fpioa->io[number] =(const fpioa_io_config_t)
+    fpioa->io[number] = from_config((const fpioa_io_config_t)
     {
         .ch_sel = function_config[function].ch_sel,
         .ds     = function_config[function].ds,
@@ -5366,7 +5386,7 @@ int fpioa_set_function_raw(int number, fpioa_function_t function)
         .di_inv = function_config[function].di_inv,
         .st     = function_config[function].st,
         /* resv and pad_di do not need initialization */
-    };
+    });
     return 0;
 }
 
@@ -5384,7 +5404,7 @@ int fpioa_set_function(int number, fpioa_function_t function)
     /* Compare all IO */
     for (index = 0; index < FPIOA_NUM_IO; index++)
     {
-        if ((fpioa->io[index].ch_sel == function) && (index != number))
+        if ((to_config(fpioa->io[index]).ch_sel == function) && (index != number))
             fpioa_set_function_raw(index, FUNC_RESV0);
     }
     fpioa_set_function_raw(number, function);
@@ -5422,7 +5442,7 @@ int fpioa_get_io_by_function(fpioa_function_t function)
     int index = 0;
     for (index = 0; index < FPIOA_NUM_IO; index++)
     {
-        if (fpioa->io[index].ch_sel == function)
+        if (to_config(fpioa->io[index]).ch_sel == function)
             return index;
     }
 

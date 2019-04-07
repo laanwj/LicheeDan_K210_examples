@@ -834,7 +834,7 @@ typedef struct _fpioa_tie
  */
 typedef struct _fpioa
 {
-    fpioa_io_config_t io[FPIOA_NUM_IO];
+    uint32_t io[FPIOA_NUM_IO];
     /*!< FPIOA GPIO multiplexer io array */
     fpioa_tie_t tie;
     /*!< FPIOA GPIO multiplexer tie */
