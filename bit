@@ -1,0 +1,5 @@
+     invoice_details = localbitcoins_api_call("/api/merchant/new_invoice/",
+            {"currency": "USD", "amount": 15, "description": "alpaca socks", "return_url": "https://merchant.com/success"})
+
+        redirect_user_to(invoice_details['url'])
+        
